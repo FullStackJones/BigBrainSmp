@@ -13,6 +13,13 @@ public class ModItems {
             "goldcoin",
             () -> new Item(new Item.Properties()));
 
+    public static final DeferredItem<Item> SILVERCOIN = ITEMS.register(
+            "silvercoin",
+            () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> COPPERCOIN = ITEMS.register(
+            "coppercoin",
+            () -> new Item(new Item.Properties()));
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

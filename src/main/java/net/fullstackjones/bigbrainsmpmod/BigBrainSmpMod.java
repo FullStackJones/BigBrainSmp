@@ -72,6 +72,8 @@ public class BigBrainSmpMod
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS)
         {
             event.accept(ModItems.GOLDCOIN);
+            event.accept(ModItems.SILVERCOIN);
+            event.accept(ModItems.COPPERCOIN);
         }
     }
 
