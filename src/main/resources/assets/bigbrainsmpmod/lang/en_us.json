@@ -1,5 +1,8 @@
 {
   "item.bigbrainsmpmod.goldcoin": "Gold Coin",
   "item.bigbrainsmpmod.silvercoin": "Silver Coin",
-  "item.bigbrainsmpmod.coppercoin": "Copper Coin"
+  "item.bigbrainsmpmod.coppercoin": "Copper Coin",
+  "item.bigbrainsmpmod.pinkcoin": "Brain Coin",
+
+  "creativetab.bigbrainsmpmod.bigbrainsmp_items": "Big Brain SMP Items"
 }
