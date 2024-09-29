@@ -17,7 +17,7 @@ public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BigBrainSmpMod.MODID);
 
-    public static final Supplier<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TAB.register(
+    public static final Supplier<CreativeModeTab> BIGBRAINSMPTAB = CREATIVE_MODE_TAB.register(
             "bigbrainsmp_tab",
             () -> CreativeModeTab.builder().icon(() ->
                     new ItemStack(ModItems.COINS[0].get()))
