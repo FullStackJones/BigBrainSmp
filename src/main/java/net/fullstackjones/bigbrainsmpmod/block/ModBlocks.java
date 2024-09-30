@@ -5,7 +5,6 @@ import net.fullstackjones.bigbrainsmpmod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -18,8 +17,8 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(BigBrainSmpMod.MODID);
 
     public static final DeferredBlock<Block> PIGGYBANK_BLOCK = registerBlock(
-            "piggybank",
-            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(2.0f, 2.0f)));
+            "brainbank",
+            () -> new Block(BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(2.0f, 2.0f)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block){
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
