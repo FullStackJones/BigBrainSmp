@@ -2,6 +2,7 @@ package net.fullstackjones.bigbrainsmpmod.item;
 
 
 import net.fullstackjones.bigbrainsmpmod.BigBrainSmpMod;
+import net.fullstackjones.bigbrainsmpmod.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -27,6 +28,7 @@ public class ModCreativeModeTabs {
                         {
                             output.accept(new ItemStack(item.get()));
                         }
+                        output.accept(ModBlocks.PIGGYBANK_BLOCK);
                     }).build());
 
     public static void register(IEventBus eventBus){
