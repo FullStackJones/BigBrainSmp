@@ -14,7 +14,7 @@ public class ModItems {
 
     static {
         final String[] CoinTypes = new String[]{"coppercoin", "silvercoin", "goldcoin", "pinkcoin"};
-        // todo: config file values are always null need fix this.
+        // todo: config file values shouldn't be null.
         final int[] CoinValues = Config.coinValues != null ? Config.coinValues : new int[]{1, 9, 81, 729};
 
         for (int i = 0; i < CoinTypes.length; i++) {
