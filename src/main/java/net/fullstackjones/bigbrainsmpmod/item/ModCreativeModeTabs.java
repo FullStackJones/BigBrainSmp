@@ -21,13 +21,13 @@ public class ModCreativeModeTabs {
     public static final Supplier<CreativeModeTab> BIGBRAINSMPTAB = CREATIVE_MODE_TAB.register(
             "bigbrainsmp_tab",
             () -> CreativeModeTab.builder().icon(() ->
-                    new ItemStack(ModItems.COINS[0].get()))
+                    new ItemStack(ModItems.GOLDCOIN.get()))
                     .title(Component.translatable("creativetab.bigbrainsmpmod.bigbrainsmp_items"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        for (DeferredItem<Item> item: ModItems.COINS)
-                        {
-                            output.accept(new ItemStack(item.get()));
-                        }
+                        output.accept(ModItems.COPPERCOIN);
+                        output.accept(ModItems.SILVERCOIN);
+                        output.accept(ModItems.GOLDCOIN);
+                        output.accept(ModItems.PINKCOIN);
                         output.accept(ModBlocks.PIGGYBANK_BLOCK);
                     }).build());
 
