@@ -1,6 +1,7 @@
 package net.fullstackjones.bigbrainsmpmod;
 
 import net.fullstackjones.bigbrainsmpmod.block.ModBlocks;
+import net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes;
 import net.fullstackjones.bigbrainsmpmod.item.ModCreativeModeTabs;
 import net.fullstackjones.bigbrainsmpmod.item.ModItems;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class BigBrainSmpMod
 
         ModCreativeModeTabs.register(modEventBus);
 
+        ModAttachmentTypes.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 

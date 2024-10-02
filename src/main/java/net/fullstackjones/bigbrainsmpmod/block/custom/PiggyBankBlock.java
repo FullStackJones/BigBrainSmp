@@ -20,6 +20,8 @@ import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import static net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes.UBI;
+
 public class PiggyBankBlock extends Block {
     public PiggyBankBlock(Properties properties) {
         super(properties);
@@ -28,14 +30,14 @@ public class PiggyBankBlock extends Block {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if(!level.isClientSide){
-            // todo: add to player a HadAllowance flag that is checked for the piggy bank to give them a coin.
+            LocalDateTime lastUbiAllowance = LocalDateTime.parse(player.getData(UBI));
             LocalDateTime currentTime = LocalDateTime.now();
-            Duration duration =  Duration.between(lastUsed, currentTime);
+            Duration duration =  Duration.between(lastUbiAllowance, currentTime);
+
             if(duration.toMinutes() >= 1) {
                 ItemStack itemStack = ModItems.COINS[0].toStack();
                 player.addItem(itemStack);
-                System.out.println("You right clicked the piggy bank!");
-                lastUsed = currentTime;
+                player.setData(UBI, currentTime.toString());
             }
         }
 
@@ -45,16 +47,6 @@ public class PiggyBankBlock extends Block {
     @Override
     protected VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return makeShape();
-    }
-
-    private static LocalDateTime lastUsed = LocalDateTime.now().minusDays(1);
-
-    public LocalDateTime getLastUsed() {
-        return lastUsed;
-    }
-
-    public void setLastUsed(LocalDateTime lastUsed) {
-        this.lastUsed = lastUsed;
     }
 
     private VoxelShape makeShape(){
