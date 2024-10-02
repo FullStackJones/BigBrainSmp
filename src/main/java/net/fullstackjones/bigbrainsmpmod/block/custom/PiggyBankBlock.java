@@ -1,10 +1,12 @@
 package net.fullstackjones.bigbrainsmpmod.block.custom;
 
 
+import net.fullstackjones.bigbrainsmpmod.Config;
 import net.fullstackjones.bigbrainsmpmod.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +28,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
 
 import static net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes.UBI;
 
@@ -47,30 +52,45 @@ public class PiggyBankBlock extends Block {
             LocalDateTime currentTime = LocalDateTime.now();
             Duration duration =  Duration.between(lastUbiAllowance, currentTime);
 
-            if(duration.toMinutes() >= 0.5)
+            //if(true)
+            if(duration.toDays() >= 1)
             {
-                ItemStack Coin = ModItems.COPPERCOIN.get().getDefaultInstance();
-                givePlayerAllowance(player, Coin);
-                player.playSound(SoundEvents.AMETHYST_BLOCK_PLACE);
+                getPlayerAllowance().forEach((key, value) -> {
+                    ItemStack coin = getCoin(key);
+                    coin.setCount(value);
+                    if(!player.getInventory().add(coin)){
+                        player.drop(coin, false);
+                    }
+                });
+                level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.0F);
                 player.setData(UBI, currentTime.toString());
             }
         }
         return ItemInteractionResult.SUCCESS;
     }
 
-    private boolean canAddToPlayerInventory(Player player, ItemStack itemStack){
-        return player.getInventory().getFreeSlot() > 0
-                || player.getInventory().getSlotWithRemainingSpace(itemStack) > 0;
+    private Map<String, Integer> getPlayerAllowance(){
+        Map<String, Integer> allowances = new HashMap<>();
+        allowances.put("pink", Config.PINK_UBI_ALLOWANCE.getDefault());
+        allowances.put("gold", Config.GOLD_UBI_ALLOWANCE.getDefault());
+        allowances.put("silver", Config.SILVER_UBI_ALLOWANCE.getDefault());
+        allowances.put("copper", Config.COPPER_UBI_ALLOWANCE.getDefault());
+        return allowances;
     }
-
-    private void givePlayerAllowance(Player player, ItemStack itemStack){
-        if(canAddToPlayerInventory(player, itemStack)){
-            player.addItem(itemStack);
-        } else {
-            player.drop(itemStack, false);
+    private ItemStack getCoin(String coinType){
+        switch(coinType){
+            case "pink":
+                return ModItems.PINKCOIN.get().getDefaultInstance();
+            case "gold":
+                return ModItems.GOLDCOIN.get().getDefaultInstance();
+            case "silver":
+                return ModItems.SILVERCOIN.get().getDefaultInstance();
+            case "copper":
+                return ModItems.COPPERCOIN.get().getDefaultInstance();
+            default:
+                return ModItems.COPPERCOIN.get().getDefaultInstance();
         }
     }
-
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

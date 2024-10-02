@@ -17,40 +17,30 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 @EventBusSubscriber(modid = BigBrainSmpMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class Config
 {
-    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static final String CATEGORY_PIGGYBANK = "piggy bank";
+    public static ModConfigSpec COMMON_CONFIG;
+    public static ModConfigSpec.IntValue PINK_UBI_ALLOWANCE;
+    public static ModConfigSpec.IntValue GOLD_UBI_ALLOWANCE;
+    public static ModConfigSpec.IntValue SILVER_UBI_ALLOWANCE;
+    public static ModConfigSpec.IntValue COPPER_UBI_ALLOWANCE;
 
-    private static final ModConfigSpec.ConfigValue<List<? extends Integer>>  COIN_VALUES = BUILDER
-            .comment("Coin Values lowest to highest. (1,9,81,729)")
-            .defineListAllowEmpty("coinValues", List.of(1,9,81,729), Config::validateCoinValues);
-
-    private static final ModConfigSpec.ConfigValue<Integer>  PIGGY_BANK_COIN_VALUE = BUILDER
-            .comment("the coin value you are able to withdraw from the piggy bank")
-            .define("piggybankcoinvalue", 1);
-
-    private static final ModConfigSpec.ConfigValue<Integer>  PIGGY_BANK_COIN_AMOUNT = BUILDER
-            .comment("the amount of coins you are able to withdraw from the piggy bank")
-            .define("piggybankcoinamount", 1);
-    static final ModConfigSpec SPEC = BUILDER.build();
-
-    public static int[] coinValues;
-    public static int piggyBankCoinAmount;
-    public static int piggyBankCoinValue;
-
-    private static boolean validateItemName(final Object obj)
-    {
-        return obj instanceof String itemName && BuiltInRegistries.ITEM.containsKey(ResourceLocation.parse(itemName));
-    }
-
-    private static boolean validateCoinValues(final Object obj)
-    {
-        return obj instanceof int[];
+    static{
+        ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
+        COMMON_BUILDER.comment("General settings").push(CATEGORY_PIGGYBANK);
+        PINK_UBI_ALLOWANCE = COMMON_BUILDER.comment("How Many Pink Coins is part of the UBI. [default: 0]")
+                .defineInRange("pinkubiallowance", 0, 0, 64);
+        GOLD_UBI_ALLOWANCE = COMMON_BUILDER.comment("How Many Gold Coins is part of the UBI. [default: 0]")
+                .defineInRange("goldubiallowance", 0, 0, 64);
+        SILVER_UBI_ALLOWANCE = COMMON_BUILDER.comment("How Many Silver Coins is part of the UBI. [default: 0]")
+                .defineInRange("silverubiallowance", 0, 0, 64);
+        COPPER_UBI_ALLOWANCE = COMMON_BUILDER.comment("How Many Copper Coins is part of the UBI. [default: 3]")
+                .defineInRange("copperubiallowance", 3, 0, 64);
+        COMMON_BUILDER.pop();
+        COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
     @SubscribeEvent
-    static void onLoad(final ModConfigEvent event)
-    {
-        coinValues = COIN_VALUES.get().stream().mapToInt(i -> i).toArray();
-        piggyBankCoinAmount = PIGGY_BANK_COIN_AMOUNT.get();
-        piggyBankCoinValue = PIGGY_BANK_COIN_VALUE.get();
+    public static void onLoad(final ModConfigEvent.Loading configEvent) {
+
     }
 }
