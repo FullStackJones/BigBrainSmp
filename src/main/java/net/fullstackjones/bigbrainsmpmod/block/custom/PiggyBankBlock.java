@@ -62,7 +62,7 @@ public class PiggyBankBlock extends Block {
                         player.drop(coin, false);
                     }
                 });
-                level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 2.0F, 1.0F);
                 player.setData(UBI, currentTime.toString());
             }
         }
