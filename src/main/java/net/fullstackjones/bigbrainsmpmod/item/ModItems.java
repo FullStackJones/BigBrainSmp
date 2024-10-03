@@ -10,21 +10,20 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(BigBrainSmpMod.MODID);
-    public static final DeferredItem<Item>[] COINS = new DeferredItem[4];
 
-    static {
-        final String[] CoinTypes = new String[]{"coppercoin", "silvercoin", "goldcoin", "pinkcoin"};
-        // todo: config file values shouldn't be null.
-        final int[] CoinValues = Config.coinValues != null ? Config.coinValues : new int[]{1, 9, 81, 729};
+    public static final DeferredItem<Item> COPPERCOIN = ITEMS.register(
+            "coppercoin",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> SILVERCOIN = ITEMS.register(
+            "silvercoin",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> GOLDCOIN = ITEMS.register(
+            "goldcoin",
+            () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> PINKCOIN = ITEMS.register(
+            "pinkcoin",
+            () -> new Item(new Item.Properties()));
 
-        for (int i = 0; i < CoinTypes.length; i++) {
-            String coinType = CoinTypes[i];
-            int coinValue = CoinValues[i];
-            COINS[i] = ITEMS.register(
-                    coinType,
-                    () -> new Item(new CoinItem.Properties().coinType(coinType).coinValue(coinValue)));
-        }
-    }
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
