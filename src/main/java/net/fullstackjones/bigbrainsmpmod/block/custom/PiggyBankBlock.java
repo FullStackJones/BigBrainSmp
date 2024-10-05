@@ -52,8 +52,8 @@ public class PiggyBankBlock extends Block {
             LocalDateTime currentTime = LocalDateTime.now();
             Duration duration =  Duration.between(lastUbiAllowance, currentTime);
 
-            //if(true)
-            if(duration.toDays() >= 1)
+            if(true)
+            //if(duration.toDays() >= 1)
             {
                 getPlayerAllowance().forEach((key, value) -> {
                     ItemStack coin = getCoin(key);
