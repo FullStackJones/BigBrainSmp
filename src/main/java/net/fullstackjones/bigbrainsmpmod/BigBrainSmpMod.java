@@ -2,6 +2,7 @@ package net.fullstackjones.bigbrainsmpmod;
 
 import net.fullstackjones.bigbrainsmpmod.block.ModBlocks;
 import net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes;
+import net.fullstackjones.bigbrainsmpmod.data.ModDataComponents;
 import net.fullstackjones.bigbrainsmpmod.item.ModCreativeModeTabs;
 import net.fullstackjones.bigbrainsmpmod.item.ModItems;
 import net.fullstackjones.bigbrainsmpmod.menu.ModContainers;
@@ -45,6 +46,7 @@ public class BigBrainSmpMod
         ModCreativeModeTabs.register(modEventBus);
         ClientInit.init(modEventBus);
         ModAttachmentTypes.register(modEventBus);
+        ModDataComponents.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModContainers.register(modEventBus);

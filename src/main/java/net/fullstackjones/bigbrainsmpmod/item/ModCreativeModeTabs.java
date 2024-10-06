@@ -28,7 +28,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SILVERCOIN);
                         output.accept(ModItems.GOLDCOIN);
                         output.accept(ModItems.PINKCOIN);
-                        output.accept(ModItems.MONEYPOUCH.get());
+                        output.accept(ModItems.MONEY_POUCH);
                         output.accept(ModBlocks.PIGGYBANK_BLOCK);
                     }).build());
 

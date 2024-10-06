@@ -1,30 +1,23 @@
 package net.fullstackjones.bigbrainsmpmod.menu;
 
+import net.fullstackjones.bigbrainsmpmod.data.MoneyPouchData;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class MoneyPouchSlot extends SlotItemHandler {
-    private final int maxStackSize;
-    private final ItemStack itemType;
+public class MoneyPouchSlot extends Slot {
+    private final ItemStack coinType;
 
-    public MoneyPouchSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, int maxStackSize, ItemStack itemType) {
-        super(itemHandler, index, xPosition, yPosition);
-        this.maxStackSize = maxStackSize;
-        this.itemType = itemType;
-    }
-
-    @Override
-    public int getMaxStackSize(ItemStack stack) {
-        return this.maxStackSize;
+    public MoneyPouchSlot(Container container, int index, int x, int y, ItemStack coinType) {
+        super(container, index, x, y);
+        this.coinType = coinType;
     }
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return ItemStack.isSameItem(stack, this.itemType);
-    }
-
-    public ItemStack getItemType() {
-        return itemType;
+        // Replace `ALLOWED_ITEM` with the specific item type you want to allow
+        return stack.is(this.coinType.getItem()) ;
     }
 }
