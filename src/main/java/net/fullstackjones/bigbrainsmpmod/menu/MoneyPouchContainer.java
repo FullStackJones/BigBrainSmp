@@ -1,5 +1,6 @@
 package net.fullstackjones.bigbrainsmpmod.menu;
 
+import net.fullstackjones.bigbrainsmpmod.data.BankDetails;
 import net.fullstackjones.bigbrainsmpmod.data.ModDataComponents;
 import net.fullstackjones.bigbrainsmpmod.data.MoneyPouchData;
 import net.fullstackjones.bigbrainsmpmod.item.custom.MoneyPouchItem;
@@ -10,26 +11,29 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 
+import java.time.LocalDateTime;
+
+import static net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes.BANKDETAILS;
 import static net.fullstackjones.bigbrainsmpmod.item.ModItems.*;
 import static net.fullstackjones.bigbrainsmpmod.menu.ModContainers.MoneyPouchMenu;
 
 public class MoneyPouchContainer extends AbstractContainerMenu {
 
     protected final Inventory playerInv;
-    private final MoneyPouchContainerData moneyContainer;
+    private final PlayerBankData playerBankData;
     protected final int inventoryColumns = 9;
     protected final int inventoryRows = 4;
     protected final int slotSize = 18;
 
 
     public MoneyPouchContainer(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory,  new MoneyPouchContainerData(4,new MoneyPouchData(4,0,0,0,0)));
+        this(containerId, playerInventory,  new PlayerBankData(4,new BankDetails(0,0,0,0, LocalDateTime.now())));
     }
 
-    public MoneyPouchContainer(int id, Inventory playerInventory, MoneyPouchContainerData moneyContainer) {
+    public MoneyPouchContainer(int id, Inventory playerInventory, PlayerBankData playerBankData) {
         super(MoneyPouchMenu.get(), id);
         this.playerInv = playerInventory;
-        this.moneyContainer = moneyContainer;
+        this.playerBankData = playerBankData;
 
         for (int k = 0; k < inventoryRows; k++) {
             for (int l = 0; l < inventoryColumns; l++) {
@@ -41,10 +45,10 @@ public class MoneyPouchContainer extends AbstractContainerMenu {
             }
         }
 
-        this.addSlot(new MoneyPouchSlot(moneyContainer, 0, 8, 7, PINKCOIN.toStack()));
-        this.addSlot(new MoneyPouchSlot(moneyContainer, 1, 8 + (slotSize), 7, GOLDCOIN.toStack()));
-        this.addSlot(new MoneyPouchSlot(moneyContainer, 2, 8 + (2 * slotSize), 7, SILVERCOIN.toStack()));
-        this.addSlot(new MoneyPouchSlot(moneyContainer, 3, 8 + (3 * slotSize), 7, COPPERCOIN.toStack()));
+        this.addSlot(new MoneyPouchSlot(playerBankData, 0, 8, 7, PINKCOIN.toStack()));
+        this.addSlot(new MoneyPouchSlot(playerBankData, 1, 8 + (slotSize), 7, GOLDCOIN.toStack()));
+        this.addSlot(new MoneyPouchSlot(playerBankData, 2, 8 + (2 * slotSize), 7, SILVERCOIN.toStack()));
+        this.addSlot(new MoneyPouchSlot(playerBankData, 3, 8 + (3 * slotSize), 7, COPPERCOIN.toStack()));
     }
 
     @Override
@@ -88,10 +92,7 @@ public class MoneyPouchContainer extends AbstractContainerMenu {
     public void removed(Player player) {
         super.removed(player);
         if (!player.level().isClientSide) {
-            ItemStack stack = player.getMainHandItem();
-            if (stack.getItem() instanceof MoneyPouchItem) {
-                ((MoneyPouchItem) stack.getItem()).setMoneyPouchData(stack, moneyContainer.getMoneyPouchData());
-            }
+            player.setData(BANKDETAILS, playerBankData.getBankDetails());
         }
     }
 }

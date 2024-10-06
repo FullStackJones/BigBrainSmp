@@ -1,12 +1,8 @@
 package net.fullstackjones.bigbrainsmpmod.menu;
 
-import net.fullstackjones.bigbrainsmpmod.data.MoneyPouchData;
-import net.fullstackjones.bigbrainsmpmod.item.ModItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class MoneyPouchSlot extends Slot {
     private final ItemStack coinType;
