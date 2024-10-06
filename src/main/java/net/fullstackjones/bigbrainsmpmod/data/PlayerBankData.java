@@ -1,6 +1,5 @@
-package net.fullstackjones.bigbrainsmpmod.menu;
+package net.fullstackjones.bigbrainsmpmod.data;
 
-import net.fullstackjones.bigbrainsmpmod.data.BankDetails;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 

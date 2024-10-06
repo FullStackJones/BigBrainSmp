@@ -1,11 +1,7 @@
 package net.fullstackjones.bigbrainsmpmod.menu;
 
 import net.fullstackjones.bigbrainsmpmod.data.BankDetails;
-import net.fullstackjones.bigbrainsmpmod.data.ModDataComponents;
-import net.fullstackjones.bigbrainsmpmod.data.MoneyPouchData;
-import net.fullstackjones.bigbrainsmpmod.item.custom.MoneyPouchItem;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
+import net.fullstackjones.bigbrainsmpmod.data.PlayerBankData;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
