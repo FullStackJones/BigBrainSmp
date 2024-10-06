@@ -4,6 +4,7 @@ import net.fullstackjones.bigbrainsmpmod.block.ModBlocks;
 import net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes;
 import net.fullstackjones.bigbrainsmpmod.item.ModCreativeModeTabs;
 import net.fullstackjones.bigbrainsmpmod.item.ModItems;
+import net.fullstackjones.bigbrainsmpmod.menu.ModContainers;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -39,12 +40,11 @@ public class BigBrainSmpMod
         NeoForge.EVENT_BUS.register(this);
 
         ModCreativeModeTabs.register(modEventBus);
-
+        ClientInit.init(modEventBus);
         ModAttachmentTypes.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
-
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
+        ModContainers.register(modEventBus);
 
     }
 

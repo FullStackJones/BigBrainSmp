@@ -2,6 +2,7 @@ package net.fullstackjones.bigbrainsmpmod.block.custom;
 
 
 import net.fullstackjones.bigbrainsmpmod.Config;
+import net.fullstackjones.bigbrainsmpmod.data.BankDetails;
 import net.fullstackjones.bigbrainsmpmod.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,14 +26,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes.UBI;
+import static net.fullstackjones.bigbrainsmpmod.data.ModAttachmentTypes.BANKDETAILS;
 
 public class PiggyBankBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -48,12 +46,9 @@ public class PiggyBankBlock extends Block {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if(!level.isClientSide){
-            LocalDateTime lastUbiAllowance = LocalDateTime.parse(player.getData(UBI));
-            LocalDateTime currentTime = LocalDateTime.now();
-            Duration duration =  Duration.between(lastUbiAllowance, currentTime);
-
-            //if(true)
-            if(duration.toDays() >= 1)
+            BankDetails details = player.getData(BANKDETAILS);
+            if(true)
+            //if(details.getUBI(LocalDateTime.now()))
             {
                 getPlayerAllowance().forEach((key, value) -> {
                     ItemStack coin = getCoin(key);
@@ -63,7 +58,7 @@ public class PiggyBankBlock extends Block {
                     }
                 });
                 level.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 2.0F, 1.0F);
-                player.setData(UBI, currentTime.toString());
+                player.setData(BANKDETAILS, details.update(LocalDateTime.now()));
             }
         }
         return ItemInteractionResult.SUCCESS;
