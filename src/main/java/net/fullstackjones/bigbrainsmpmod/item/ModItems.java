@@ -27,8 +27,10 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> MONEY_POUCH = ITEMS.register(
             "moneypouch",
-            () -> new MoneyPouchItem(new Item.Properties().component(MONEYPOUCH_DATA.value(),
-                    new MoneyPouchData(4, 0, 0 ,0, 0))));
+            () -> new MoneyPouchItem(new Item.Properties()
+                    .component(MONEYPOUCH_DATA.value(),
+                    new MoneyPouchData(4, 0, 0 ,0, 0))
+                    .stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

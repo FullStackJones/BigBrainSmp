@@ -17,6 +17,7 @@ public final class MoneyPouchData implements IItemHandler {
     private final int goldCoins;
     private final int silverCoins;
     private final int copperCoins;
+    private final int stackLimit = 128;
 
     public MoneyPouchData(int slots, int pinkCoins, int goldCoins, int silverCoins, int copperCoins) {
         this.slots = slots;
@@ -86,22 +87,21 @@ public final class MoneyPouchData implements IItemHandler {
         if (stack.isEmpty()) return ItemStack.EMPTY;
         if (!isItemValid(slot, stack)) return stack;
 
-        int count = stack.getCount();
         if (simulate) {
             switch (slot) {
-                case 0: return new ItemStack(ModItems.PINKCOIN.asItem(), Math.max(0, count - pinkCoins));
-                case 1: return new ItemStack(ModItems.GOLDCOIN.asItem(), Math.max(0, count - goldCoins));
-                case 2: return new ItemStack(ModItems.SILVERCOIN.asItem(), Math.max(0, count - silverCoins));
-                case 3: return new ItemStack(ModItems.COPPERCOIN.asItem(), Math.max(0, count - copperCoins));
+                case 0: return new ItemStack(ModItems.PINKCOIN.asItem(), Math.max(0, stackLimit - pinkCoins));
+                case 1: return new ItemStack(ModItems.GOLDCOIN.asItem(), Math.max(0, stackLimit - goldCoins));
+                case 2: return new ItemStack(ModItems.SILVERCOIN.asItem(), Math.max(0, stackLimit - silverCoins));
+                case 3: return new ItemStack(ModItems.COPPERCOIN.asItem(), Math.max(0, stackLimit - copperCoins));
                 default: return stack;
             }
         } else {
             MoneyPouchData updatedData;
             switch (slot) {
-                case 0: updatedData = withUpdatedCoins(pinkCoins + count, goldCoins, silverCoins, copperCoins); break;
-                case 1: updatedData = withUpdatedCoins(pinkCoins, goldCoins + count, silverCoins, copperCoins); break;
-                case 2: updatedData = withUpdatedCoins(pinkCoins, goldCoins, silverCoins + count, copperCoins); break;
-                case 3: updatedData = withUpdatedCoins(pinkCoins, goldCoins, silverCoins, copperCoins + count); break;
+                case 0: updatedData = withUpdatedCoins(pinkCoins + stackLimit, goldCoins, silverCoins, copperCoins); break;
+                case 1: updatedData = withUpdatedCoins(pinkCoins, goldCoins + stackLimit, silverCoins, copperCoins); break;
+                case 2: updatedData = withUpdatedCoins(pinkCoins, goldCoins, silverCoins + stackLimit, copperCoins); break;
+                case 3: updatedData = withUpdatedCoins(pinkCoins, goldCoins, silverCoins, copperCoins + stackLimit); break;
                 default: return stack;
             }
             return ItemStack.EMPTY;
@@ -151,7 +151,7 @@ public final class MoneyPouchData implements IItemHandler {
 
     @Override
     public int getSlotLimit(int slot) {
-        return Integer.MAX_VALUE; // Or any other limit you want to set
+        return 128; // Or any other limit you want to set
     }
 
     @Override

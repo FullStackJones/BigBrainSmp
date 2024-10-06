@@ -1,6 +1,7 @@
 package net.fullstackjones.bigbrainsmpmod.menu;
 
 import net.fullstackjones.bigbrainsmpmod.data.MoneyPouchData;
+import net.fullstackjones.bigbrainsmpmod.item.ModItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -16,8 +17,16 @@ public class MoneyPouchSlot extends Slot {
     }
 
     @Override
+    public int getMaxStackSize() {
+        return 128;
+    }
+    @Override
+    public int getMaxStackSize(ItemStack stack) {
+        return 128;
+    }
+
+    @Override
     public boolean mayPlace(ItemStack stack) {
-        // Replace `ALLOWED_ITEM` with the specific item type you want to allow
         return stack.is(this.coinType.getItem()) ;
     }
 }

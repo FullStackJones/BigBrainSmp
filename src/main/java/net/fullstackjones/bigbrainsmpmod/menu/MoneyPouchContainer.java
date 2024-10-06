@@ -54,8 +54,33 @@ public class MoneyPouchContainer extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int quickMovedSlotIndex) {
-        // The quick moved slot stack
         ItemStack quickMovedStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(quickMovedSlotIndex);
+
+        if (slot != null && slot.hasItem()) {
+            ItemStack stackInSlot = slot.getItem();
+            quickMovedStack = stackInSlot.copy();
+
+            // Check if the slot is in the player's inventory (index >= 4)
+            if (quickMovedSlotIndex >= 4) {
+                // Move from player inventory to money pouch
+                if (!this.moveItemStackTo(stackInSlot, 0, 4, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else {
+                // Move from money pouch to player inventory
+                if (!this.moveItemStackTo(stackInSlot, 4, this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (stackInSlot.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+        }
+
         return quickMovedStack;
     }
 

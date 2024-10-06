@@ -28,4 +28,14 @@ public class MoneyPouchContainerData extends SimpleContainer {
         // Update the MoneyPouchData with the new values
         moneyPouchData = moneyPouchData.withUpdatedCoins(getItem(0).getCount(), getItem(1).getCount(), getItem(2).getCount(), getItem(3).getCount());
     }
+
+    @Override
+    public int getMaxStackSize(ItemStack pStack) {
+        return 128;
+    }
+
+    @Override
+    public int getMaxStackSize() {
+        return 128;
+    }
 }
