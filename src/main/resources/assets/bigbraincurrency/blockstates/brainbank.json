@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "bigbraincurrency:block/brainbank"
+    },
+    "facing=south": {
+      "model":"bigbraincurrency:block/brainbank",
+      "y" : 180
+    },
+    "facing=west": {
+      "model":"bigbraincurrency:block/brainbank",
+      "y" : 270
+    },
+    "facing=east": {
+      "model":"bigbraincurrency:block/brainbank",
+      "y" : 90
+    }
+  }
+}

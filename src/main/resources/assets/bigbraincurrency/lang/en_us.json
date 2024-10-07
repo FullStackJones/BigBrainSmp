@@ -1,0 +1,11 @@
+{
+  "item.bigbraincurrency.goldcoin": "Gold Coin",
+  "item.bigbraincurrency.silvercoin": "Silver Coin",
+  "item.bigbraincurrency.coppercoin": "Copper Coin",
+  "item.bigbraincurrency.pinkcoin": "Brain Coin",
+  "item.bigbraincurrency.moneypouch": "Money Pouch",
+
+  "block.bigbraincurrency.brainbank": "Brain Coin Bank",
+
+  "creativetab.bigbraincurrency.bigbraincurrency_items": "Big Brain Currency"
+}
