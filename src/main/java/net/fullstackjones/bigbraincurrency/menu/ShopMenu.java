@@ -55,8 +55,8 @@ public class ShopMenu  extends AbstractContainerMenu {
     private void addShopInventory() {
         for (int k = 0; k < inventoryRows; k++) {
             for (int l = 0; l < inventoryColumns; l++) {
-                this.addSlot(new Slot(shopInv, l + k * inventoryColumns, 8 + l * slotSize, ShopInventoryStartY + k * slotSize));
-                playerInventoryStartY = ShopInventoryStartY + 20 + k * slotSize;
+                this.addSlot(new Slot(shopInv, l + k * inventoryColumns, 8 + l * slotSize, ShopInventoryStartY + 3 + k * slotSize));
+                playerInventoryStartY = ShopInventoryStartY + 30 + k * slotSize  - 1;
             }
         }
     }
@@ -64,21 +64,16 @@ public class ShopMenu  extends AbstractContainerMenu {
     private void addShopSaleSlots() {
         var shopSaleSlots = new SimpleContainer(9);;
         shopSaleSlots.addItem(ModItems.COPPERCOIN.toStack());
-        var saleslotY = slotSize;
-        for (int l = 0; l < 9; l++) {
-            if(l == 0){
-                this.addSlot(new Slot(shopSaleSlots, l , 8 + 4 * slotSize, saleslotY - 28));
-            }
-            else if (l >= 5){
-                this.addSlot(new Slot(shopSaleSlots, l, 8 + l * slotSize, saleslotY));
-            }
-            else{
-                this.addSlot(new Slot(shopSaleSlots, l, 8 + (l - 1) * slotSize, saleslotY));
-            }
-
+        var saleslotY = slotSize - 2;
+        this.addSlot(new Slot(shopSaleSlots, 0 , 8, saleslotY));
+        for (int l = 5; l < 9; l++) {
+            this.addSlot(new Slot(shopSaleSlots, l - 4, 8 + l * slotSize, saleslotY));
+        }
+        for (int l = 5; l < 9; l++) {
+            this.addSlot(new Slot(shopSaleSlots, l, 8 + l * slotSize, saleslotY + this.slotSize + 22));
         }
 
-        ShopInventoryStartY = 25 + slotSize;
+        ShopInventoryStartY = 39 + saleslotY + this.slotSize;
     }
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {

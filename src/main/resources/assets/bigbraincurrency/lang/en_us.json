@@ -9,6 +9,10 @@
   "block.bigbraincurrency.shop": "Shop",
 
   "container.bigbraincurrency.shopentity": "Shop",
+  "container.bigbraincurrency.shopentity.stock": "Stock:",
+  "container.bigbraincurrency.shopentity.Item": "Item:",
+  "container.bigbraincurrency.shopentity.Price": "Price:",
+  "container.bigbraincurrency.shopentity.Profit": "Profit:",
 
   "creativetab.bigbraincurrency.bigbraincurrency_items": "Big Brain Currency"
 }
