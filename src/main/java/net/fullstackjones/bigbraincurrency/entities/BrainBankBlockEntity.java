@@ -1,5 +1,6 @@
 package net.fullstackjones.bigbraincurrency.entities;
 
+import net.fullstackjones.bigbraincurrency.Config;
 import net.fullstackjones.bigbraincurrency.data.BrainBankData;
 import net.fullstackjones.bigbraincurrency.menu.BrainBankMenu;
 import net.fullstackjones.bigbraincurrency.registration.ModBlockEntities;
@@ -23,7 +24,7 @@ import java.time.LocalDateTime;
 
 
 public class BrainBankBlockEntity extends BlockEntity implements MenuProvider {
-    private final BrainBankData data = new BrainBankData(0);
+    private final BrainBankData data = new BrainBankData();
 
     public BrainBankBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.BRAINBANK_ENTITY.get(), pos, blockState);
@@ -33,17 +34,8 @@ public class BrainBankBlockEntity extends BlockEntity implements MenuProvider {
         return data;
     }
 
-    public void setBankValue(int value) {
-        data.setBankValue(value);
-        setChanged();
-        if(!level.isClientSide()) {
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-        }
-    }
-
-    public void setUbi(boolean ubi) {
-        data.setHadUbi(ubi);
-        data.setUbiSetTime(LocalDateTime.now().plusDays(1).withHour(12).withMinute(0).withSecond(0));
+    public void setLastDistribution(LocalDateTime lastDistribution) {
+        data.setLastDistribution(lastDistribution);
         setChanged();
         if(!level.isClientSide()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
@@ -51,9 +43,7 @@ public class BrainBankBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public void setData(BrainBankData data) {
-        this.data.setBankValue(data.getBankValue());
-        this.data.setHadUbi(data.getHadUbi());
-        this.data.setUbiSetTime(data.getUbiSetTime());
+        this.data.setLastDistribution(data.getLastDistribution());
         setChanged();
         if(!level.isClientSide()) {
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
@@ -90,5 +80,23 @@ public class BrainBankBlockEntity extends BlockEntity implements MenuProvider {
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    public LocalDateTime nextDistributionAvailableAt() {
+        if (!Config.DIST_ENABLED.get()) {
+            return null;
+        }
+        LocalDateTime nextDistribution = this.data.getLastDistribution()
+            .plusDays(Config.DIST_PERIOD_DAYS.get())
+            .plusHours(Config.DIST_PERIOD_HRS.get())
+            .plusMinutes(Config.DIST_PERIOD_MINS.get())
+            .plusSeconds(Config.DIST_PERIOD_SECS.get());
+        return nextDistribution;
+    }
+
+    public boolean nextDistributionAvailable() {
+        LocalDateTime nextDistribution = nextDistributionAvailableAt();
+        LocalDateTime now = LocalDateTime.now();
+        return nextDistribution != null && nextDistribution.isBefore(now);
     }
 }

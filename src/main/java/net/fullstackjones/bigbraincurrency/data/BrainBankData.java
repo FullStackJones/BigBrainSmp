@@ -4,69 +4,44 @@ package net.fullstackjones.bigbraincurrency.data;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import org.jetbrains.annotations.UnknownNullability;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class BrainBankData implements INBTSerializable<CompoundTag> {
-    protected int BankValue;
-    protected boolean HadUbi;
-    protected LocalDateTime UbiSetTime;
+    protected LocalDateTime mLastDistribution;
 
-    public BrainBankData(int BankValue) {
-        this(BankValue, true, LocalDateTime.now());
+    public BrainBankData() {
+        this(LocalDateTime.MIN);
     }
 
-    public BrainBankData(int BankValue, boolean HadUbi, LocalDateTime UbiSetTime) {
-        this.BankValue = BankValue;
-        this.HadUbi = HadUbi;
-        this.UbiSetTime = UbiSetTime;
+    public BrainBankData(LocalDateTime lastDistribution) {
+        this.mLastDistribution = lastDistribution;
     }
 
-    public int getBankValue() {
-        return BankValue;
+    public LocalDateTime getLastDistribution() {
+        return mLastDistribution;
     }
 
-    public boolean getHadUbi() {
-        return HadUbi;
-    }
-
-    public LocalDateTime getUbiSetTime() {
-        return UbiSetTime;
-    }
-
-    public void setHadUbi(boolean HadUbi) {
-        this.HadUbi = HadUbi;
-    }
-
-    public void setBankValue(int BankValue) {
-        this.BankValue = BankValue;
-    }
-
-    public void setUbiSetTime(LocalDateTime UbiSetTime) {
-        this.UbiSetTime = UbiSetTime;
+    public void setLastDistribution(LocalDateTime lastDistribution) {
+        this.mLastDistribution = lastDistribution;
     }
 
     @Override
-    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag nbt = new CompoundTag();
-        nbt.putInt("BankValue", BankValue);
-        nbt.putBoolean("HadUbi", HadUbi);
-        nbt.putBoolean("UbiSetTime", HadUbi);
+        nbt.putString("LastDistribution", mLastDistribution.toString());
         return nbt;
     }
 
     @Override
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        setBankValue(nbt.getInt("BankValue"));
-        setHadUbi(nbt.getBoolean("HadUbi"));
-        setHadUbi(nbt.getBoolean("HadUbi"));
+        setLastDistribution(LocalDateTime.parse(nbt.getString("LastDistribution")));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getBankValue(), this.getUbiSetTime(), this.getHadUbi());
+        return Objects.hash(this.getLastDistribution());
     }
 
     @Override
@@ -75,9 +50,7 @@ public class BrainBankData implements INBTSerializable<CompoundTag> {
             return true;
         } else {
             return obj instanceof BrainBankData ex
-                    && this.getHadUbi() == ex.getHadUbi()
-                    && this.getBankValue() == ex.getBankValue()
-                    && this.getUbiSetTime() == ex.getUbiSetTime();
+                    && this.getLastDistribution() == ex.getLastDistribution();
         }
     }
 }
