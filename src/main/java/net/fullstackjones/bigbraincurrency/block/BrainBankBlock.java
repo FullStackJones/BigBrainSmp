@@ -56,7 +56,10 @@ public class BrainBankBlock extends Block implements EntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof BrainBankBlockEntity brainBank) {
             if (player instanceof ServerPlayer) {
-                ((ServerPlayer) player).openMenu(new SimpleMenuProvider(brainBank, Component.literal("Brain bank")), pos);
+                ((ServerPlayer) player).openMenu(
+                    new SimpleMenuProvider(brainBank, Component.translatable("container.bigbraincurrency.brainbank")),
+                    pos
+                );
             }
         }
         return InteractionResult.SUCCESS;

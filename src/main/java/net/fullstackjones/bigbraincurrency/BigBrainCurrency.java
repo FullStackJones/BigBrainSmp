@@ -6,9 +6,6 @@ import net.fullstackjones.bigbraincurrency.registration.*;
 import net.fullstackjones.bigbraincurrency.entities.SimpleShopBlockEntityRenderer;
 import net.fullstackjones.bigbraincurrency.registration.ModAttachmentTypes;
 import net.fullstackjones.bigbraincurrency.registration.ModMenus;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.slf4j.Logger;
@@ -26,9 +23,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import top.theillusivec4.curios.api.CuriosCapability;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import static net.fullstackjones.bigbraincurrency.registration.ModMenus.*;
 
@@ -44,9 +38,6 @@ public class BigBrainCurrency
     {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-        // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
         NeoForge.EVENT_BUS.register(this);
 
